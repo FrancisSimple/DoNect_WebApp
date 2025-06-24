@@ -22,6 +22,8 @@ import Dashboard from "./admin/pages/Dashboard";
 import AdminProjects from "./admin/pages/AdminProjects";
 import Donors from "./admin/pages/Donors";
 import Beneficiaries from "./admin/pages/Beneficiaries";
+import Settings from "./admin/pages/Settings";
+import Transactions from "./admin/pages/Transactions";
 
 function App() {
   const location = useLocation();
@@ -67,6 +69,8 @@ function App() {
               <Route path="projects" element={<AdminProjects />} />
               <Route path="donors" element={<Donors />} />
               <Route path="beneficiaries" element={<Beneficiaries />} />
+              <Route path="settings" element={<Settings />} />
+              <Route path="transactions" element={<Transactions />} />
               {/* Add more admin routes here */}
             </Route>
             {/* 404 */}

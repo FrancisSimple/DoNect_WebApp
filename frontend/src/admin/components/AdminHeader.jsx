@@ -7,7 +7,11 @@ const navLinks = [
   { to: "/admin/projects", label: "Projects", icon: "fas fa-project-diagram" },
   { to: "/admin/donors", label: "Donors", icon: "fas fa-hand-holding-heart" },
   { to: "/admin/beneficiaries", label: "Beneficiaries", icon: "fas fa-users" },
-  { to: "/admin/transactions", label: "Transactions", icon: "fas fa-exchange-alt" },
+  {
+    to: "/admin/transactions",
+    label: "Transactions",
+    icon: "fas fa-exchange-alt",
+  },
   { to: "/admin/reports", label: "Reports", icon: "fas fa-chart-bar" },
   { to: "/admin/settings", label: "Settings", icon: "fas fa-cog" },
   { to: "/admin/logout", label: "Logout", icon: "fas fa-sign-out-alt" },
@@ -59,7 +63,11 @@ function AdminHeader({ onHamburger }) {
             <i className="fas fa-bars text-2xl"></i>
           </button>
           <h1 className="text-green-800 font-bold text-xl md:text-2xl tracking-wide">
-            <i className={`${navLinks.find((l) => l.to === location.pathname)?.icon} mr-1 md:mr-2`}></i>
+            <i
+              className={`${
+                navLinks.find((l) => l.to === location.pathname)?.icon
+              } mr-1 md:mr-2`}
+            ></i>
             {tabName}
           </h1>
         </div>
@@ -121,7 +129,7 @@ function AdminHeader({ onHamburger }) {
                   </div>
                 </div>
                 <Link
-                  to="/admin/profile"
+                  to="/admin/settings"
                   className="block px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-all"
                 >
                   <i className="fas fa-user-cog mr-2"></i>
@@ -129,7 +137,7 @@ function AdminHeader({ onHamburger }) {
                 </Link>
                 <Link
                   to="/admin/settings"
-                  className="block px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-all"
+                  className="hidden px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-all"
                 >
                   <i className="fas fa-cog mr-2"></i>
                   Settings
