@@ -1,4 +1,4 @@
-import Logo from "../../assets/ngo-logo.jpg";
+//import Logo from "../../assets/ngo-logo.jpg";
 import { useLocation, Link } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 

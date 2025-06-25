@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import Charts from "../components/Charts";
+import TransactionCharts from "../components/TransactionCharts"; // Update import to use new component
 
 // Function to get Font Awesome icon class based on transaction type
 const getReceiptIcon = (transactionType) => {
@@ -21,6 +21,10 @@ function Transactions() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedStat, setSelectedStat] = useState("totalRaised");
   const [viewMode, setViewMode] = useState("table");
+
+  // Add pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(6); // Show 6 cards per page in grid view
 
   // Filter states
   const [filters, setFilters] = useState({
@@ -124,12 +128,12 @@ function Transactions() {
     },
   ]);
 
-  // Add a refresh function to use the setTransactions (to avoid the ESLint warning)
+ 
   const refreshTransactions = () => {
     setIsLoading(true);
 
-    // In a real application, you would fetch fresh data from an API here
-    // For now, we'll just simulate a refresh by setting the same data after a delay
+    // Later, I would fetch fresh data from an API here
+    // For now, I'll just simulate a refresh by setting the same data after a delay
     setTimeout(() => {
       setTransactions([...transactions]); // Create a new array reference to trigger re-render
       setIsLoading(false);
@@ -249,6 +253,24 @@ function Transactions() {
     return searchMatch && dateMatch && statusMatch && typeMatch && amountMatch;
   });
 
+  // Pagination logic - only applied for card view
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredTransactions.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
+
+  // Calculate total pages
+  const totalPages = Math.ceil(filteredTransactions.length / itemsPerPage);
+
+  // Change page handler
+  const paginate = (pageNumber) => {
+    if (pageNumber > 0 && pageNumber <= totalPages) {
+      setCurrentPage(pageNumber);
+    }
+  };
+
   const resetFilters = () => {
     setFilters({
       dateRange: "all",
@@ -257,6 +279,7 @@ function Transactions() {
       amount: "all",
     });
     setSearchTerm("");
+    setCurrentPage(1); // Reset to first page when filters change
   };
 
   const handleStatCardClick = (statKey) => {
@@ -312,13 +335,13 @@ function Transactions() {
         ))}
       </div>
 
-      {/* Chart Section */}
+      {/* Chart Section - Updated to use TransactionCharts */}
       <div className="bg-white rounded-2xl shadow p-6 mb-10" data-aos="fade-up">
         <h2 className="text-xl font-bold text-green-700 mb-4">
           {stats[selectedStat].label} Overview
         </h2>
         <div className="h-80">
-          <Charts chartType={stats[selectedStat].chartType} />
+          <TransactionCharts chartType={stats[selectedStat].chartType} />
         </div>
       </div>
 
@@ -344,7 +367,7 @@ function Transactions() {
           </select>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 justify-between">
           {/* View toggle buttons */}
           <div className="flex border border-gray-300 rounded-lg overflow-hidden">
             <button
@@ -385,6 +408,15 @@ function Transactions() {
             <span className="hidden sm:inline">Advanced Filter</span>
             <span className="sm:hidden">Filter</span>
           </button>
+
+          {/* Add Transaction Link Button */}
+          <Link
+            to="/admin/transactions/add-transaction"
+            className="inline-flex justify-center items-center px-4 py-1 bg-green-600 text-white rounded-full font-semibold hover:bg-green-700 transition-all"
+          >
+            <i className="fas fa-plus mr-2"></i>
+            <span className="inline">Add</span>
+          </Link>
         </div>
       </div>
 
@@ -487,8 +519,18 @@ function Transactions() {
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center text-gray-600 text-sm">
         <p>
           Showing{" "}
-          <span className="font-medium">{filteredTransactions.length}</span> of{" "}
-          <span className="font-medium">{transactions.length}</span>{" "}
+          <span className="font-medium">
+            {viewMode === "table"
+              ? filteredTransactions.length
+              : `${indexOfFirstItem + 1}-${Math.min(
+                  indexOfLastItem,
+                  filteredTransactions.length
+                )} of ${filteredTransactions.length}`}
+          </span>{" "}
+          {viewMode === "table" ? "of " : ""}
+          {viewMode === "table" && (
+            <span className="font-medium">{transactions.length}</span>
+          )}{" "}
           transactions
         </p>
         {Object.values(filters).some((value) => value !== "all") && (
@@ -502,7 +544,7 @@ function Transactions() {
         )}
       </div>
 
-      {/* Transactions Table - styled like AdminProjects */}
+      {/* Transactions display - table or card view */}
       {isLoading ? (
         <div className="flex justify-center items-center py-20">
           <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-green-500"></div>
@@ -652,7 +694,7 @@ function Transactions() {
                             ></i>
                           </div>
                         </td>
-                        <td className="w-[120px] px-4 py-3">
+                        <td className="w-[160px] px-4 py-3 md:px-0">
                           <div className="flex flex-wrap gap-2">
                             <Link
                               to={`/admin/transactions/${transaction.id}`}
@@ -689,7 +731,7 @@ function Transactions() {
         // Card view - updated with better styling to match the table
         <div className="bg-white rounded-2xl shadow p-4 w-full max-w-full">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {filteredTransactions.map((transaction) => (
+            {currentItems.map((transaction) => (
               <div
                 key={transaction.id}
                 className="bg-white border border-gray-200 hover:border-green-200 rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-all duration-300"
@@ -834,26 +876,68 @@ function Transactions() {
         </div>
       )}
 
-      {/* Pagination - using consistent styling */}
-      <div className="flex justify-end mt-4 md:mx-4 mx-1">
-        <nav className="relative z-0 inline-flex rounded-md shadow-sm">
-          <button className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-            <i className="fas fa-chevron-left"></i>
-          </button>
-          <button className="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
-            1
-          </button>
-          <button className="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-green-50 text-sm font-medium text-green-600">
-            2
-          </button>
-          <button className="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
-            3
-          </button>
-          <button className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-            <i className="fas fa-chevron-right"></i>
-          </button>
-        </nav>
-      </div>
+      {/* Pagination - updated to be functional and only shown in grid mode */}
+      {viewMode === "grid" && filteredTransactions.length > itemsPerPage && (
+        <div className="flex justify-end mt-4 md:mx-4 mx-1">
+          <nav className="relative z-0 inline-flex rounded-md shadow-sm">
+            <button
+              className={`relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium ${
+                currentPage === 1
+                  ? "text-gray-300 cursor-not-allowed"
+                  : "text-gray-500 hover:bg-gray-50 cursor-pointer"
+              }`}
+              onClick={() => paginate(currentPage - 1)}
+              disabled={currentPage === 1}
+            >
+              <i className="fas fa-chevron-left"></i>
+            </button>
+
+            {[...Array(Math.min(5, totalPages)).keys()].map((_, idx) => {
+              // Show 5 page numbers at most, centered around current page
+              let pageNumber;
+              if (totalPages <= 5) {
+                // If 5 or fewer pages, show all pages
+                pageNumber = idx + 1;
+              } else if (currentPage <= 3) {
+                // If near start, show first 5 pages
+                pageNumber = idx + 1;
+              } else if (currentPage >= totalPages - 2) {
+                // If near end, show last 5 pages
+                pageNumber = totalPages - 4 + idx;
+              } else {
+                // Otherwise show current page and 2 pages before/after
+                pageNumber = currentPage - 2 + idx;
+              }
+
+              return (
+                <button
+                  key={pageNumber}
+                  className={`relative inline-flex items-center px-4 py-2 border border-gray-300 ${
+                    currentPage === pageNumber
+                      ? "bg-green-50 text-green-600 font-medium"
+                      : "bg-white text-gray-700 hover:bg-gray-50"
+                  } text-sm`}
+                  onClick={() => paginate(pageNumber)}
+                >
+                  {pageNumber}
+                </button>
+              );
+            })}
+
+            <button
+              className={`relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium ${
+                currentPage === totalPages
+                  ? "text-gray-300 cursor-not-allowed"
+                  : "text-gray-500 hover:bg-gray-50 cursor-pointer"
+              }`}
+              onClick={() => paginate(currentPage + 1)}
+              disabled={currentPage === totalPages}
+            >
+              <i className="fas fa-chevron-right"></i>
+            </button>
+          </nav>
+        </div>
+      )}
     </div>
   );
 }

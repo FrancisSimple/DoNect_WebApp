@@ -23,9 +23,12 @@ const navLinks = [
     icon: "fas fa-exchange-alt",
     label: "Transactions",
   },
-  { to: "/admin/reports", icon: "fas fa-chart-bar", label: "Reports" },
+  {
+    to: "/admin/reports",
+    icon: "fas fa-newspaper",
+    label: "Reports",
+  },
   { to: "/admin/settings", icon: "fas fa-cog", label: "Settings" },
-  { to: "/admin/logout", icon: "fas fa-sign-out-alt", label: "Logout" },
 ];
 
 function AdminSidebar({ isOpen, onClose }) {
@@ -87,6 +90,18 @@ function AdminSidebar({ isOpen, onClose }) {
                 </Link>
               </li>
             ))}
+            <li>
+              <form action="" method="POST" className="w-full">
+                <button
+                  type="submit"
+                  className={`flex w-full items-center gap-3 px-6 py-3 rounded-lg transition-all duration-200 font-medium text-red-500 bg-red-50 hover:text-red-700 cursor-pointer hover:bg-red-100`}
+                  onClick={onClose}
+                >
+                  <i className="fas fa-sign-out-alt text-lg"></i>
+                  <span>Logout</span>
+                </button>
+              </form>
+            </li>
           </ul>
         </nav>
         <div className="px-6 py-4 border-t border-green-800 text-xs text-green-200">

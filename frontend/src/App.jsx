@@ -24,6 +24,8 @@ import Donors from "./admin/pages/Donors";
 import Beneficiaries from "./admin/pages/Beneficiaries";
 import Settings from "./admin/pages/Settings";
 import Transactions from "./admin/pages/Transactions";
+import Reports from "./admin/pages/Reports";
+import AdminNotifications from "./admin/pages/AdminNotifications";
 
 function App() {
   const location = useLocation();
@@ -71,6 +73,8 @@ function App() {
               <Route path="beneficiaries" element={<Beneficiaries />} />
               <Route path="settings" element={<Settings />} />
               <Route path="transactions" element={<Transactions />} />
+              <Route path="reports" element={<Reports />} />
+              <Route path="notifications" element={<AdminNotifications />} />
               {/* Add more admin routes here */}
             </Route>
             {/* 404 */}
