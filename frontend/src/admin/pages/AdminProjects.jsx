@@ -369,13 +369,14 @@ function AdminProjects() {
                       </td>
                       <td className="w-[160px] px-4 py-3">
                         <div className="flex flex-wrap gap-2">
-                          <button
+                          <Link
+                            to={`/admin/projects/edit/${project.id}`}
                             className="inline-flex items-center px-3 py-1.5 rounded-full bg-blue-100 text-blue-700 hover:bg-blue-200 transition text-xs font-semibold"
                             title="Edit"
                           >
                             <i className="fas fa-edit mr-1"></i>
                             Edit
-                          </button>
+                          </Link>
                           <button
                             className="inline-flex items-center px-3 py-1.5 rounded-full bg-red-100 text-red-700 hover:bg-red-200 transition text-xs font-semibold"
                             title="Delete"

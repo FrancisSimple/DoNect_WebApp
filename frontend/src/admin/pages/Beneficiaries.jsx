@@ -392,13 +392,14 @@ function Beneficiaries() {
                       </td>
                       <td className="w-[160px] px-4 md:px-0 py-3">
                         <div className="flex flex-wrap gap-2">
-                          <button
+                          <Link
+                            to={`/admin/beneficiaries/${beneficiary.id}`}
                             className="inline-flex items-center px-3 py-1.5 rounded-full bg-blue-100 text-blue-700 hover:bg-blue-200 transition text-xs font-semibold whitespace-nowrap"
                             title="View Details"
                           >
-                            <i className="fas fa-eye mr-1"></i>
-                            View
-                          </button>
+                            <i className="fas fa-edit mr-1"></i>
+                            Edit
+                          </Link>
                           <button
                             className="inline-flex items-center px-3 py-1.5 rounded-full bg-red-100 text-red-700 hover:bg-red-200 transition text-xs font-semibold whitespace-nowrap"
                             title="Remove"

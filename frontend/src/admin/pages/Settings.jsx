@@ -827,8 +827,8 @@ function Settings() {
                           >
                             <option value="en">English</option>
                             <option value="fr">French</option>
-                            <option value="es">Spanish</option>
-                            <option value="ar">Arabic</option>
+                            {/* <option value="es">Spanish</option>
+                            <option value="ar">Arabic</option> */}
                           </select>
                         </div>
 

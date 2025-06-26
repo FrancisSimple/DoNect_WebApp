@@ -26,6 +26,14 @@ import Settings from "./admin/pages/Settings";
 import Transactions from "./admin/pages/Transactions";
 import Reports from "./admin/pages/Reports";
 import AdminNotifications from "./admin/pages/AdminNotifications";
+import AddProject from "./admin/pages/AddProject";
+import AddTransaction from "./admin/pages/AddTransaction";
+import AddReport from "./admin/pages/AddReport";
+import EditProject from "./admin/pages/EditProject";
+import EditDonor from "./admin/pages/EditDonor";
+import EditBeneficiary from "./admin/pages/EditBeneficiary";
+import EditTransaction from "./admin/pages/EditTransaction";
+import EditReport from "./admin/pages/EditReport";
 
 function App() {
   const location = useLocation();
@@ -69,11 +77,22 @@ function App() {
             <Route path="/admin" element={<AdminLayout />}>
               <Route path="dashboard" element={<Dashboard />} />
               <Route path="projects" element={<AdminProjects />} />
+              <Route path="projects/add-new-project" element={<AddProject />} />
+              <Route path="projects/edit/:id" element={<EditProject />} />
               <Route path="donors" element={<Donors />} />
+              <Route path="donors/edit/:id" element={<EditDonor />} />
               <Route path="beneficiaries" element={<Beneficiaries />} />
-              <Route path="settings" element={<Settings />} />
+              <Route path="beneficiaries/:id" element={<EditBeneficiary />} />
               <Route path="transactions" element={<Transactions />} />
+              <Route path="transactions/:id" element={<EditTransaction />} />
+              <Route
+                path="transactions/add-transaction"
+                element={<AddTransaction />}
+              />
+              <Route path="settings" element={<Settings />} />
               <Route path="reports" element={<Reports />} />
+              <Route path="reports/edit-blog/:id" element={<EditReport />} />
+              <Route path="reports/add-new-blog" element={<AddReport />} />
               <Route path="notifications" element={<AdminNotifications />} />
               {/* Add more admin routes here */}
             </Route>

@@ -698,14 +698,14 @@ function Transactions() {
                           <div className="flex flex-wrap gap-2">
                             <Link
                               to={`/admin/transactions/${transaction.id}`}
-                              className="inline-flex items-center px-3 py-1.5 rounded-full bg-blue-100 text-blue-700 hover:bg-blue-200 transition text-xs font-semibold"
+                              className="inline-flex items-center px-3 py-1.5 rounded-full bg-blue-100 text-blue-700 hover:bg-blue-200 transition text-xs font-semibold cursor-pointer"
                             >
-                              <i className="fas fa-eye mr-1"></i>
-                              View
-                            </Link>
-                            <button className="inline-flex items-center px-3 py-1.5 rounded-full bg-red-100 text-red-700 hover:bg-red-200 transition text-xs font-semibold">
                               <i className="fas fa-edit mr-1"></i>
                               Edit
+                            </Link>
+                            <button className="inline-flex items-center px-3 py-1.5 rounded-full bg-red-100 text-red-700 hover:bg-red-200 transition text-xs font-semibold">
+                              <i className="fas fa-trash mr-1"></i>
+                              Delete
                             </button>
                           </div>
                         </td>

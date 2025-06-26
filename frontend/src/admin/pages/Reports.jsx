@@ -63,7 +63,7 @@ const allBlogs = [
     status: "Published",
     author: "John Doe",
     date: "2023-10-15",
-    views: 1250,
+    //views: 1250,
     featured: true,
   },
   {
@@ -74,7 +74,7 @@ const allBlogs = [
     status: "Published",
     author: "Jane Smith",
     date: "2023-10-10",
-    views: 980,
+    //views: 980,
     featured: true,
   },
   {
@@ -85,7 +85,7 @@ const allBlogs = [
     status: "Published",
     author: "Robert Johnson",
     date: "2023-10-05",
-    views: 1540,
+    //views: 1540,
     featured: false,
   },
   {
@@ -96,7 +96,7 @@ const allBlogs = [
     status: "Draft",
     author: "Emma Davis",
     date: "2023-09-30",
-    views: 0,
+    //views: 0,
     featured: false,
   },
   {
@@ -107,7 +107,7 @@ const allBlogs = [
     status: "Published",
     author: "Michael Brown",
     date: "2023-09-25",
-    views: 2230,
+    //views: 2230,
     featured: true,
   },
   {
@@ -118,7 +118,7 @@ const allBlogs = [
     status: "Published",
     author: "Sarah Wilson",
     date: "2023-09-20",
-    views: 1120,
+    //views: 1120,
     featured: false,
   },
   {
@@ -129,7 +129,7 @@ const allBlogs = [
     status: "Draft",
     author: "John Doe",
     date: "2023-09-15",
-    views: 0,
+    //views: 0,
     featured: false,
   },
   {
@@ -140,7 +140,7 @@ const allBlogs = [
     status: "Published",
     author: "Lisa Johnson",
     date: "2023-09-10",
-    views: 890,
+    //views: 890,
     featured: true,
   },
   {
@@ -151,7 +151,7 @@ const allBlogs = [
     status: "Draft",
     author: "Robert Johnson",
     date: "2023-09-05",
-    views: 0,
+    //views: 0,
     featured: false,
   },
 ];
@@ -376,9 +376,9 @@ function Reports() {
                       <th className="w-[100px] px-4 py-3 text-left text-xs font-bold text-green-700 uppercase tracking-wider">
                         Date
                       </th>
-                      <th className="w-[80px] px-4 py-3 text-left text-xs font-bold text-green-700 uppercase tracking-wider">
+                      {/* <th className="w-[80px] px-4 py-3 text-left text-xs font-bold text-green-700 uppercase tracking-wider">
                         Views
-                      </th>
+                      </th> */}
                       <th className="w-[100px] px-4 py-3 text-left text-xs font-bold text-green-700 uppercase tracking-wider">
                         Featured
                       </th>
@@ -422,11 +422,11 @@ function Reports() {
                       <td className="w-[100px] px-4 py-3 text-gray-700 whitespace-nowrap">
                         {new Date(blog.date).toLocaleDateString()}
                       </td>
-                      <td className="w-[80px] px-4 py-3 text-gray-700 font-semibold whitespace-nowrap">
+                      {/* <td className="w-[80px] px-4 py-3 text-gray-700 font-semibold whitespace-nowrap">
                         {blog.status === "Published"
                           ? blog.views.toLocaleString()
                           : "-"}
-                      </td>
+                      </td> */}
                       <td className="w-[100px] px-4 py-3 whitespace-nowrap">
                         {blog.featured ? (
                           <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 text-xs font-semibold">
@@ -452,13 +452,14 @@ function Reports() {
                       </td>
                       <td className="w-[160px] md:px-0 px-4 py-3">
                         <div className="flex flex-wrap gap-2">
-                          <button
+                          <Link
+                            to={`/admin/reports/edit-blog/${blog.id}`}
                             className="inline-flex items-center px-3 py-1.5 rounded-full bg-blue-100 text-blue-700 hover:bg-blue-200 transition text-xs font-semibold"
                             title="Edit"
                           >
                             <i className="fas fa-edit mr-1"></i>
                             Edit
-                          </button>
+                          </Link>
                           <button
                             className="inline-flex items-center px-3 py-1.5 rounded-full bg-red-100 text-red-700 hover:bg-red-200 transition text-xs font-semibold"
                             title="Delete"
